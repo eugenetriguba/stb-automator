@@ -9,7 +9,8 @@ inspecting the video output (using image recognition and OCR).
 
 Stb requires [OpenCV](https://opencv.org/), [LIRC](http://www.lirc.org/), and [Gstreamer](https://gstreamer.freedesktop.org/) to be setup and installed already on the given system in order to work properly. LIRC works best with Linux, but there are ports to macOS and Windows. However, this package is setup to only work with Linux right now.
 
-If you use Ubuntu, there is a installation script for the prerequisites in `tools/prerequisites-install-ubuntu.sh`. Note that you will still have to setup
+If you use Ubuntu, there is a installation script for the prerequisites in `tools/prerequisites-install-ubuntu.sh`. Note that you will still have to setup the lirc 
+configuration and figure out your gstreamer pipelines.
 
 ## Linux Infrared Remote Control (LIRC)
 
