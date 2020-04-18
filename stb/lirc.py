@@ -165,7 +165,7 @@ class Lirc:
 
         return response
 
-    def send_once(self, key: str, remote: str, repeat_count: int = 1):
+    def send_once(self, key: str, remote: str, repeat_count: int = 1) -> LircResponse:
         """
         Send an LIRC SEND_ONCE command.
 
