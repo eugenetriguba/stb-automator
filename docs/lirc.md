@@ -18,7 +18,7 @@ On Windows, there is a winLIRC program: http://winlirc.sourceforge.net/
 
 On Linux, your system package manager will likely have it already.
 
-## Check if LIRC is recieving and interpretting your remote commands
+## Check If LIRC Is Recieving and Interpretting Your Remote Commands
 
 One way to check if LIRC is recieving your commands is using the `irw` 
 utilty from LIRC. IF you run `irw /var/run/lirc/lircd`, assumming that
