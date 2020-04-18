@@ -1,106 +1,35 @@
-import platform
-import socket
-import sys
-import threading
 import time
 
+from stb.lirc import Lirc
 
-class PressResult:
-    def __init__(self, command: str, success: bool, lirc_data: list):
-        self.command = command
+
+class KeyPress:
+    def __init__(self, key: str, success: bool, start_time: float, end_time: float):
+        self.key = key
         self.success = success
-        self.lirc_data = lirc_data
-        self.start_time = None
-        self.end_time = None
+        self.start_time = start_time
+        self.end_time = end_time
 
 
 class Remote:
     """
     Send IR signals via LIRC.
 
-    More information on the lircd daemon, socket interface,
-    reply package format, etc. can be found at https://www.lirc.org/html/lircd.html
+    This class provides the high-level api for sending IR wheras
+    the Lirc class is the lower level api to interacting with LIRC.
     """
 
-    DEFAULT_UNIX_SOCKET = "/var/run/lirc/lircd"
-
-    def __init__(self, remote_name: str, lirc_socket_path: str = DEFAULT_UNIX_SOCKET):
+    def __init__(
+        self, remote_name: str, lirc_socket_path: str = Lirc.DEFAULT_SOCKET_PATH
+    ):
         """
         Initialize this Remote by connecting to the lircd socket.
 
         Currently, the remote will exit with a status code of 1 if the
         system running it is not a Linux system.
         """
-        system = platform.system()
-        if system == "Linux":
-            self.__lock = threading.Lock()
-            self.remote = remote_name
-            self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-            self.socket.connect(lirc_socket_path)
-        else:
-            print(f"The current system ({system}) is not supported.")
-            sys.exit(1)
-
-    def __send_command(self, command: str) -> PressResult:
-        """
-        Send a command to lircd.
-
-        :param command: A command from the lircd socket command interface.
-        :return: A PressResult
-        """
-        command += "\n"
-
-        try:
-            self.__lock.acquire()
-
-            start_time = time.time()
-            self.socket.sendall(command.encode("utf-8"))
-            end_time = time.time()
-
-            reply_packet = self.__read_reply_packet()
-            press_result = self.__parse_reply_packet(reply_packet)
-            press_result.start_time = start_time
-            press_result.end_time = end_time
-
-            return press_result
-        finally:
-            self.__lock.release()
-
-    def __read_reply_packet(self) -> str:
-        """
-        Read the reply packet that lircd sends after a sent command.
-
-        Reply packet format:
-
-            BEGIN
-            <command>
-            [SUCCESS|ERROR]
-            [DATA
-            n
-            n lines of data]
-            END
-        """
-        BUFFER_LENGTH = 256
-        buffer = ""
-        data = self.socket.recv(BUFFER_LENGTH)
-
-        # Ignore recieve requests that the socket caches
-        while "BEGIN" not in data.decode("utf-8"):
-            data = self.socket.recv(BUFFER_LENGTH)
-
-        buffer += data.decode("utf-8")
-
-        while not buffer.endswith("END\n"):
-            data = self.socket.recv(BUFFER_LENGTH)
-            buffer += data
-
-        return buffer
-
-    def __parse_reply_packet(self, packet: str) -> PressResult:
-        """WIP"""
-        lines = packet.split("\n")
-        print(lines)
-        return PressResult("blah", True, [])
+        self.remote = remote_name
+        self.__lirc = Lirc(lirc_socket_path=lirc_socket_path)
 
     def press(
         self, key: str, repeat_count: int = 1, interpress_delay_secs: float = 0.3
@@ -113,24 +42,27 @@ class Remote:
         :param interpress_delay_secs: The wait time between key presses
                                       if repeat_count > 1.
 
-        :return: a PressResult or a list of PressResults if repeat_count > 1.
-        :rtype: PressResult or list
+        :return: a KeyPress or a list of KeyPress if repeat_count > 1.
+        :rtype: KeyPress or list
         """
         if repeat_count > 1:
-            responses = []
+            key_presses = []
 
             while repeat_count > 0:
-                responses.append(
-                    self.__send_command(f"SEND_ONCE {self.remote} {key} 1")
-                )
+                key_presses.append(self.__timed_send_once(key))
+                time.sleep(interpress_delay_secs)
                 repeat_count -= 1
 
-                if repeat_count >= 1:
-                    time.sleep(interpress_delay_secs)
+            return key_presses
 
-            return responses
+        return self.__timed_send_once(key)
 
-        return self.__send_command(f"SEND_ONCE {self.remote} {key} {repeat_count}")
+    def __timed_send_once(self, key: str) -> KeyPress:
+        start_time = time.time()
+        response = self.__lirc.send_once(key, self.remote)
+        end_time = time.time()
+        value, key_name = response.key.split(" ")
+        return KeyPress(key_name, response.success, start_time, end_time)
 
     def press_and_wait(self, key: str):
         """
