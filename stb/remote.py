@@ -10,6 +10,14 @@ class KeyPress:
         self.start_time = start_time
         self.end_time = end_time
 
+    def __repr__(self):
+        return (
+            f"KeyPress(key={self.key}, "
+            f"success={self.success}, "
+            f"start_time={self.start_time}, "
+            f"end_time={self.end_time})"
+        )
+
 
 class Remote:
     """
@@ -29,7 +37,7 @@ class Remote:
         system running it is not a Linux system.
         """
         self.remote = remote_name
-        self.__lirc = Lirc(lirc_socket_path=lirc_socket_path)
+        self.__lirc = Lirc(socket_path=lirc_socket_path)
 
     def press(
         self, key: str, repeat_count: int = 1, interpress_delay_secs: float = 0.3

@@ -1,6 +1,4 @@
-import platform
 import socket
-import sys
 import threading
 from itertools import islice
 
@@ -16,6 +14,13 @@ class LircResponse:
         self.command = command
         self.success = success
         self.data = data
+
+    def __repr__(self):
+        return (
+            f"LircResponse(command={self.command}, "
+            f"success={self.success}, "
+            f"data={self.data})"
+        )
 
 
 class Lirc:
@@ -41,30 +46,22 @@ class Lirc:
     """
 
     DEFAULT_SOCKET_PATH = "/var/run/lirc/lircd"
-    DEFAULT_PORT = 8765
     ENCODING = "utf-8"
 
-    def __init__(self, lirc_socket_path: str = DEFAULT_SOCKET_PATH):
+    def __init__(
+        self,
+        socket_path: str = DEFAULT_SOCKET_PATH,
+        socket: socket.socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM),
+    ):
         """
         Initialize Lirc by connecting to the lircd socket.
 
-        Currently, this will exit with a status code of 1 if the
-        system running it is not a Linux system as support for
-        connecting over TCP is not implemented yet (which is what
-        you'd have to use on Windows if you use winLIRC).
-
-        There is a port to macOS, but it doesn't seem to be maintained or
-        work all that well last time I installed it using macports.
-        https://github.com/andyvand/LIRC
+        :param socket_path: The path to the lircd socket.
+        :param socket: The socket.socket used to connect to the lircd socket.
         """
-        system = platform.system()
-        if system == "Linux":
-            self.__lock = threading.Lock()
-            self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-            self.socket.connect(lirc_socket_path)
-        else:
-            print(f"The current system ({system}) is not supported.")
-            sys.exit(1)
+        self.__lock = threading.Lock()
+        self.socket = socket
+        self.socket.connect(socket_path)
 
     def __send_command(self, command: str) -> LircResponse:
         """
