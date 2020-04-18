@@ -4,8 +4,10 @@
 #   - Builds and installs OpenCV from source.
 #
 # Note: It may take somewhere between 10 minutes to 2 hours to get everything
-# installed and built. 90% of that time comes from building and installing OpenCV.
-# Make sure to adjust the make -j8 line to your number of CPU cores.
+# installed and built, depending on how powerful of a machine you're using. 
+# 90% of that time comes from building and installing OpenCV.
+# To speed things up, add a -j# argument to `make`, where the # is your number 
+# of CPU cores.
 
 # General Dependencies for opencv
 sudo apt install -y build-essential cmake git pkg-config libgtk-3-dev \
@@ -49,7 +51,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D WITH_V4L=ON \
     -D WITH_OPENGL=ON ..
 
-make -j8
+make
 sudo make install
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
