@@ -58,7 +58,7 @@ include = '\.pyi?$'
 line_length = 88
 multi_line_output = 3
 known_first_party = ["stb"]
-known_third_party = ["click", "config_file"]
+known_third_party = ["click", "config_file", "numpy"]
 
 [build-system]
 requires = ["poetry>=0.12"]
