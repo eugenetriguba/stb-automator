@@ -10,13 +10,13 @@ def get_config_file_path() -> Path:
 
     Retrieved in the following order:
       * STB_CONFIG_FILE_PATH if it exists.
-      * User configuration file at ~/.hc/config.ini if it exists.
+      * User configuration file at ~/.stb/config.ini if it exists.
       * The default configuration file in the stb module.
     """
     search_hierarchy = [
         os.environ.get("STB_CONFIG_FILE_PATH"),
-        Path("~/.hc/config.ini").expanduser()
-        if Path("~/.hc/config.ini").exists()
+        Path("~/.stb/config.ini").expanduser()
+        if Path("~/.stb/config.ini").exists()
         else None,
         module_path("config/config.original.ini"),
     ]
