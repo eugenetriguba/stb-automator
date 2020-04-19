@@ -30,12 +30,7 @@ class Remote:
     def __init__(
         self, remote_name: str, lirc_socket_path: str = Lirc.DEFAULT_SOCKET_PATH
     ):
-        """
-        Initialize this Remote by connecting to the lircd socket.
-
-        Currently, the remote will exit with a status code of 1 if the
-        system running it is not a Linux system.
-        """
+        """Initialize this Remote by connecting to the lircd socket."""
         self.remote = remote_name
         self.__lirc = Lirc(socket_path=lirc_socket_path)
 
