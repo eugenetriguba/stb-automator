@@ -67,10 +67,6 @@ class Lirc:
         """
         Send a command to lircd.
 
-        A lock is setup for the purpose of ensuring we are the only
-        ones accessing the socket during this send and released at
-        the end.
-
         :param command: A command from the lircd socket command interface.
         See SOCKET COMMAND INTERFACE in https://www.lirc.org/html/lircd.html
         for more information.
