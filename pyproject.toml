@@ -58,7 +58,7 @@ max_line_length = 88
 line_length = 88
 multi_line_output = 3
 known_first_party = ["stb"]
-known_third_party = ["click", "config_file", "numpy", "pytest"]
+known_third_party = ["click", "config_file", "gi", "numpy", "pytest"]
 
 [build-system]
 requires = ["poetry>=0.12"]
