@@ -2,7 +2,8 @@
 
 > Automated Control & Testing for Set-Top Boxes
 
-[![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://pypi.org/project/black/) 
+![Python](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8-blue)
+[![Autopep8](https://img.shields.io/badge/style-autopep8-green)](https://pypi.org/project/autopep8/) 
 
 Stb allows you to issue commands to your set-top box (or whatever device you're wanting to control that takes in IR). It can then anaylze the behavior of the device and how it responds to those commands by
 inspecting the video output (using image recognition and OCR).
