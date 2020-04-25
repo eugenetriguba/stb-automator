@@ -49,8 +49,6 @@ pytest-cov = "^2.8.1"
 bump2version = "^1.0.0"
 taskipy = "^1.2.1"
 
-
-
 [tool.autopep8]
 max_line_length = 88
 
