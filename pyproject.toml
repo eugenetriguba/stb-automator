@@ -30,7 +30,7 @@ test = "poetry run pytest -vvv --cov=stb/ --ignore=tests/integration/ --cov-repo
 stb = 'stb.cli.runner:stb'
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.6.1"
 click = "^7.1.1"
 opencv-python = "^4.2.0"
 config-file = "^0.9.0"
@@ -39,20 +39,20 @@ numpy = "^1.18.2"
 pytesseract = "^0.3.3"
 
 [tool.poetry.dev-dependencies]
-pre-commit = "^2.2.0"
-black = "^19.10b0"
+autopep8 = "^1.5.2"
+pre-commit = "^2.3.0"
 flake8 = "^3.7.9"
 isort = "^4.3.21"
-seed-isort-config = "^2.1.0"
+seed-isort-config = "^2.1.1"
 pytest = "^5.4.1"
 pytest-cov = "^2.8.1"
 bump2version = "^1.0.0"
 taskipy = "^1.2.1"
 
-[tool.black]
-line-length = 88
-target_version = ['py38']
-include = '\.pyi?$'
+
+
+[tool.autopep8]
+max_line_length = 88
 
 [tool.isort]
 line_length = 88
