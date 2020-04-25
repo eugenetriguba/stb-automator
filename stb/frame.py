@@ -1,13 +1,26 @@
-import numpy
+import time
+
+import numpy as np
 
 
-class Frame(numpy.ndarray):
+class Frame(np.ndarray):
     """
     A frame of video from the video stream.
 
     OpenCV uses a numpy.ndarray to represent images, which is
     stored in a 8-bit BGR format.
     """
+
+    def __new__(
+        cls,
+        array: np.ndarray,
+        dtype: np.dtype = None,
+        order=None,
+        time: time.time = None,
+    ):
+        obj = np.asarray(array, dtype=dtype, order=order).view(cls)
+        obj.time = time
+        return obj
 
     def __repr__(self):
         if len(self.shape) == 3:
