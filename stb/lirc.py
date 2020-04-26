@@ -39,8 +39,10 @@ class Lirc:
     """
     Communicate with the lircd daemon.
 
-    More information on the lircd daemon, socket interface,
-    reply package format, etc. can be found at https://www.lirc.org/html/lircd.html
+    More information on the lircd daemon, socket interface, 
+    reply packet format, etc. can be found at https://www.lirc.org/html/lircd.html
+    That information is not all documented here because it would introduce
+    a lot of repetitiveness in the docstrings.
 
     Example Usage:
 
@@ -84,6 +86,9 @@ class Lirc:
         :param command: A command from the lircd socket command interface.
         See SOCKET COMMAND INTERFACE in https://www.lirc.org/html/lircd.html
         for more information.
+        
+        :return: A LircResponse containing information on the command sent,
+            whether it was successful, and any other data, if any was sent.
         """
         if not command.endswith("\n"):
             command += "\n"
@@ -144,17 +149,12 @@ class Lirc:
 
     def __parse_reply_packet(self, packet: str) -> LircResponse:
         """
-        Parse the reply packaet from lircd.
-
-         The format of the reply packet is
-
-            BEGIN
-            <command>
-            [SUCCESS|ERROR]
-            [DATA
-            n
-            n lines of data]
-            END
+        Parse the reply packet from lircd.
+        
+        :param packet: The reply packet from lirc.
+      
+        :return: An LircResponse containing the command sent,
+            whether it was successful, and any other data, if any was sent.
         """
         lines = packet.split("\n")
         current_index = 0
@@ -242,7 +242,14 @@ class Lirc:
         return self.__send_command("LIST")
 
     def list_remote_keys(self, remote: str) -> LircResponse:
-        """List all the keys for a specific remote"""
+        """
+        List all the keys for a specific remote.
+        
+        :param remote: The remote to list the keys of.
+        
+        :return: An LircResponse containing the keys in the 
+            data section.
+        """
         return self.__send_command(f"LIST {remote}")
 
     def set_inputlog(self, path: str) -> LircResponse:
