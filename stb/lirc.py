@@ -28,7 +28,11 @@ class LircSocketError(Exception):
 
 
 class LircSocketTimeoutError(LircSocketError):
-    """For when a generic error occurs with the lircd socket"""
+    """
+    For when a timeout error occurs with the socket. 
+    This can happen when recv does not find any data for 
+    a given amount of time.
+    """
 
 
 class Lirc:
