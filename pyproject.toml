@@ -24,7 +24,7 @@ classifiers = [
 ]
 
 [tool.taskipy.tasks]
-test = "poetry run pytest -vvv --cov=stb/ --ignore=tests/integration/ --cov-report term-missing tests/"
+test = "poetry run pytest -vvv --cov=stb/ --cov-report term-missing tests/"
 
 [tool.poetry.scripts]
 stb = 'stb.cli.runner:stb'
