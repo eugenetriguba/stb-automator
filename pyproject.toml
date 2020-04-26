@@ -24,7 +24,9 @@ classifiers = [
 ]
 
 [tool.taskipy.tasks]
-test = "poetry run pytest -vvv --cov=stb/ --cov-report term-missing tests/"
+lint = "pre-commit run --all"
+test = "poetry run task test_unit"
+test_unit = "poetry run pytest -vvv --cov=stb/ --cov-report term-missing tests/"
 
 [tool.poetry.scripts]
 stb = 'stb.cli.runner:stb'
