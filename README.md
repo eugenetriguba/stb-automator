@@ -30,7 +30,7 @@ install LIRC e.g. `sudo apt install lirc` for Ubuntu.
 The two things you'll have to figure out on your own is the
 `lirc_options.conf` file and the remote configuration file as these are
 dependent on the hardware you use for your setup. LIRC configuration is
-typically in `etc/lirc/`.
+typically in `/etc/lirc/`.
 
 For `lirc_options.conf`, the main change you'll want to make is to
 change the driver from `devinput` to `default`. Devinput works fine for
@@ -45,7 +45,7 @@ LIRC's IR record utility. However, I've had much better luck using a
 RedRat3-II and RedRat's IR Signal Database for creating the remote
 configuration file. RedRat3-II is now discontinued, but you could look
 into the RedRatX or see if you can find a RedRat3-II used. Place this
-generated remote configuration file in `etc/lirc/lircd.conf.d/`.
+generated remote configuration file in `/etc/lirc/lircd.conf.d/`.
 
 If you're using an Iguanaworks IR Transciever, you may find the discussion
 here useful:
