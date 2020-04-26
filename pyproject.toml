@@ -41,7 +41,6 @@ numpy = "^1.18.2"
 pytesseract = "^0.3.3"
 
 [tool.poetry.dev-dependencies]
-autopep8 = "^1.5.2"
 pre-commit = "^2.3.0"
 flake8 = "^3.7.9"
 isort = "^4.3.21"
@@ -50,9 +49,12 @@ pytest = "^5.4.1"
 pytest-cov = "^2.8.1"
 bump2version = "^1.0.0"
 taskipy = "^1.2.1"
+black = "^19.10b0"
 
-[tool.autopep8]
-max_line_length = 88
+[tool.black]
+line-length = 88
+target_version = ['py38']
+include = '\.pyi?$'
 
 [tool.isort]
 line_length = 88

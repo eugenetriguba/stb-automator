@@ -14,11 +14,7 @@ def test_custom_path_lirc_init(mock_socket):
 
 
 @pytest.mark.parametrize(
-    "reply_packet",
-    [
-        b"BEGIN\nSEND_ONCE remote key\nSUCCESS\nEND\n"
-
-    ]
+    "reply_packet", [b"BEGIN\nSEND_ONCE remote key\nSUCCESS\nEND\n"]
 )
 def test_read_reply_packet(mock_lirc, reply_packet):
     mock_lirc.socket.recv.return_value = reply_packet
@@ -29,20 +25,10 @@ def test_read_reply_packet(mock_lirc, reply_packet):
 @pytest.mark.parametrize(
     "reply_packet, repeat_count",
     [
-        (
-            b"BEGIN\nSEND_ONCE remote key\nSUCCESS\nEND\n",
-            1
-        ),
-        (
-            b"BEGIN\nSEND_ONCE remote key\nERROR\nEND\n",
-            1
-        ),
-        (
-            b"BEGIN\nSEND_ONCE remote key\nSUCCESS\nEND\n",
-            1
-        ),
-
-    ]
+        (b"BEGIN\nSEND_ONCE remote key\nSUCCESS\nEND\n", 1),
+        (b"BEGIN\nSEND_ONCE remote key\nERROR\nEND\n", 1),
+        (b"BEGIN\nSEND_ONCE remote key\nSUCCESS\nEND\n", 1),
+    ],
 )
 def test_send_once(mock_lirc, reply_packet, repeat_count):
     REMOTE = "remote"
@@ -53,7 +39,8 @@ def test_send_once(mock_lirc, reply_packet, repeat_count):
     mock_lirc.socket.recv.return_value = reply_packet
     response = mock_lirc.send_once(KEY, REMOTE)
     mock_lirc.socket.sendall.assert_called_with(
-        (COMMAND + "\n").encode(mock_lirc.ENCODING))
+        (COMMAND + "\n").encode(mock_lirc.ENCODING)
+    )
 
     if repeat_count > 1:
         assert type(response) == list

@@ -27,9 +27,7 @@ class Remote:
     the Lirc class is the lower level api to interacting with LIRC.
     """
 
-    def __init__(
-        self, name: str, lirc_socket_path: str = Lirc.DEFAULT_SOCKET_PATH
-    ):
+    def __init__(self, name: str, lirc_socket_path: str = Lirc.DEFAULT_SOCKET_PATH):
         """
         Initialize this Remote by connecting to the lircd socket.
 

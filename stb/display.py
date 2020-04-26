@@ -8,7 +8,6 @@ Gst.init(None)
 
 
 class Display:
-
     def __init__(self, source_pipeline, sink_pipeline):
         pass
 
