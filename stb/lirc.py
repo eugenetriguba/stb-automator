@@ -112,6 +112,9 @@ class Lirc:
             END
 
         :return: The contents of the reply packet from BEGIN to END as a str.
+        :raises LircSocketTimeoutError: If recv does not find any data after
+            SOCKET_TIMEOUT amount of seconds.
+        :raises LircSocketError: If something else went wrong with the socket.
         """
         try:
             BUFFER_LENGTH = 256
