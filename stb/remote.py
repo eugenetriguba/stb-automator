@@ -28,10 +28,17 @@ class Remote:
     """
 
     def __init__(
-        self, remote_name: str, lirc_socket_path: str = Lirc.DEFAULT_SOCKET_PATH
+        self, name: str, lirc_socket_path: str = Lirc.DEFAULT_SOCKET_PATH
     ):
-        """Initialize this Remote by connecting to the lircd socket."""
-        self.remote = remote_name
+        """
+        Initialize this Remote by connecting to the lircd socket.
+
+        :param name: Name of the remote to use.
+                     Corresponds to the name of your LIRC remote.
+
+        :param lirc_socket_path: The full path to your lircd socket.
+        """
+        self.name = name
         self.__lirc = Lirc(socket_path=lirc_socket_path)
 
     def press(
@@ -62,7 +69,7 @@ class Remote:
 
     def __timed_send_once(self, key: str) -> KeyPress:
         start_time = time.time()
-        response = self.__lirc.send_once(key, self.remote)
+        response = self.__lirc.send_once(key, self.name)
         end_time = time.time()
         value, key_name = response.key.split(" ")
         return KeyPress(key_name, response.success, start_time, end_time)
