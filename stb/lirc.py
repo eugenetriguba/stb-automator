@@ -23,6 +23,14 @@ class LircResponse:
         )
 
 
+class LircSocketError(Exception):
+    """For when a generic error occurs with the lircd socket"""
+
+
+class LircSocketTimeoutError(LircSocketError):
+    """For when a generic error occurs with the lircd socket"""
+
+
 class Lirc:
     """
     Communicate with the lircd daemon.
@@ -46,6 +54,7 @@ class Lirc:
     """
 
     DEFAULT_SOCKET_PATH = "/var/run/lirc/lircd"
+    SOCKET_TIMEOUT = 5
     ENCODING = "utf-8"
 
     def __init__(
@@ -61,6 +70,7 @@ class Lirc:
         """
         self.__lock = threading.Lock()
         self.socket = socket
+        self.socket.settimeout(self.SOCKET_TIMEOUT)
         self.socket.connect(socket_path)
 
     def __send_command(self, command: str) -> LircResponse:
@@ -99,21 +109,31 @@ class Lirc:
 
         :return: The contents of the reply packet from BEGIN to END as a str.
         """
-        BUFFER_LENGTH = 256
-        buffer = ""
-        data = self.socket.recv(BUFFER_LENGTH)
-
-        # Ignore recieve requests that the socket caches
-        while "BEGIN" not in data.decode(self.ENCODING):
+        try:
+            BUFFER_LENGTH = 256
+            buffer = ""
             data = self.socket.recv(BUFFER_LENGTH)
 
-        buffer += data.decode(self.ENCODING)
+            # Ignore recieve requests that the socket caches
+            while "BEGIN" not in data.decode(self.ENCODING):
+                data = self.socket.recv(BUFFER_LENGTH)
 
-        while not buffer.endswith("END\n"):
-            data = self.socket.recv(BUFFER_LENGTH)
             buffer += data.decode(self.ENCODING)
 
-        return buffer
+            while not buffer.endswith("END\n"):
+                data = self.socket.recv(BUFFER_LENGTH)
+                buffer += data.decode(self.ENCODING)
+
+            return buffer
+        except (socket.timeout, socket.error) as e:
+            err = e.args[0]
+            if err == "timed out":
+                raise LircSocketTimeoutError(
+                    f"could not find any data on the socket after "
+                    f"{self.SOCKET_TIMEOUT} seconds, socket timed out."
+                )
+            else:
+                raise LircSocketError(e)
 
     def __parse_reply_packet(self, packet: str) -> LircResponse:
         """
