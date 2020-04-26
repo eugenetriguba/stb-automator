@@ -30,7 +30,7 @@ test = "poetry run pytest -vvv --cov=stb/ --ignore=tests/integration/ --cov-repo
 stb = 'stb.cli.runner:stb'
 
 [tool.poetry.dependencies]
-python = "^3.6.1"
+python = "^3.7"
 click = "^7.1.1"
 opencv-python = "^4.2.0"
 config-file = "^0.9.0"
