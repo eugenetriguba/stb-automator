@@ -18,7 +18,7 @@ classifiers = [
     "Development Status :: 1 - Planning",
     "License :: OSI Approved :: MIT License",
     "Operating System :: POSIX :: Linux",
-    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
     "Topic :: Software Development :: Testing",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
