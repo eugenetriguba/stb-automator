@@ -10,6 +10,10 @@
 Stb allows you to issue commands to your set-top box (or whatever device you're wanting to control that takes in IR). It can then anaylze the behavior of the device and how it responds to those commands by
 inspecting the video output (using image recognition and OCR).
 
+This package is designed to be a small library that you can easily add to the test suite of your existing applications. It does not come with any sort of test runner. You can use it with python's unittest or a third party library like pytest. 
+
+If you want an entire framework and something more full featured, where you can purchase a testing node, have support from a company that have been doing this for a while now, and don't want to do your own DIY setup, you should take a look at [stb-tester](https://github.com/stb-tester/stb-tester). 
+
 ## Installation
 
 Stb requires [OpenCV](https://opencv.org/), [LIRC](http://www.lirc.org/), and [Gstreamer](https://gstreamer.freedesktop.org/) to be setup and installed already on the given system in order to work properly. LIRC works best with Linux, but there are ports to macOS and Windows. However, this package is setup to only work with Linux right now.
