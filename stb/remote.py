@@ -71,8 +71,7 @@ class Remote:
         start_time = time.time()
         response = self.__lirc.send_once(key, self.name)
         end_time = time.time()
-        value, key_name = response.key.split(" ")
-        return KeyPress(key_name, response.success, start_time, end_time)
+        return KeyPress(key, response.success, start_time, end_time)
 
     def press_and_wait(self, key: str):
         """
