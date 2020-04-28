@@ -7,10 +7,10 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/eugenetriguba/stb"
 keywords = [
-    "set-top box", 
-    "test automation", 
+    "set-top box",
+    "test automation",
     "opencv",
-    "tesseract", 
+    "tesseract",
     "LIRC",
     "gstreamer"
 ]
@@ -60,6 +60,7 @@ include = '\.pyi?$'
 [tool.isort]
 line_length = 88
 multi_line_output = 3
+include_trailing_comma = true
 known_first_party = ["stb"]
 known_third_party = ["click", "config_file", "gi", "numpy", "pytest"]
 
