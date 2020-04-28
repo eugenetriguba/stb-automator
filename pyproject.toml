@@ -27,6 +27,7 @@ classifiers = [
 lint = "pre-commit run --all"
 test = "poetry run task test_unit"
 test_unit = "poetry run pytest -vvv --cov=stb/ --cov-report term-missing tests/"
+test_all = "export STB_RUN_LONG_TESTS=true && poetry run task test && unset STB_RUN_LONG_TESTS"
 
 [tool.poetry.scripts]
 stb = 'stb.cli.runner:stb'
