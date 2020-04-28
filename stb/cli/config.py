@@ -1,20 +1,23 @@
+from pathlib import Path
+from shutil import copyfile
+
 import click
 from config_file import ConfigFile, ParsingError
 
-from stb.utils import exit_with_error_output, get_config_file_path, module_path
+from stb.utils import (
+    STB_INTERNAL_CONFIG_FILE,
+    STB_USER_CONFIG_FILE,
+    STB_USER_CONFIG_FOLDER,
+    exit_with_error_output,
+    get_config_file_path,
+)
 
 
 @click.group(short_help="Manipulate or see your configuration file")
-@click.option(
-    "-p", "--path", "custom_path", help="Absolute path to the configuration file"
-)
 @click.pass_context
 def config(ctx, custom_path):
     try:
-        if custom_path:
-            ctx.obj = ConfigFile(custom_path)
-        else:
-            ctx.obj = ConfigFile(get_config_file_path())
+        ctx.obj = ConfigFile(get_config_file_path())
     except ParsingError as error:
         exit_with_error_output(error)
 
@@ -31,7 +34,7 @@ def get(ctx, key):
     try:
         print(ctx.obj.get(key))
     except ParsingError as error:
-        print(error)
+        exit_with_error_output(error)
 
 
 @config.command(short_help="Set a key to a value")
@@ -45,9 +48,7 @@ def set(ctx, key, value):
     KEY: The 'section.key' in the configuration file.
     VALUE: The value to set a key in the configuration file.
     """
-    internal_config_path = module_path("config/config.original.ini")
-
-    if ctx.obj.path == internal_config_path:
+    if ctx.obj.path == STB_INTERNAL_CONFIG_FILE:
         print("You're using the internal configuration path, which cannot be edited.")
         print("Run `stb config setup` instead to setup your user configuration file.")
     else:
@@ -82,14 +83,12 @@ def delete(ctx, key):
 @click.pass_context
 def reset(ctx):
     """Restores the configuration file to its original state."""
-    internal_config_path = module_path("config/config.original.ini")
-
-    if ctx.obj.path == internal_config_path:
+    if ctx.obj.path == STB_INTERNAL_CONFIG_FILE:
         click.secho(
             "You're using the internal configuration file, can't reset.", fg="red"
         )
     else:
-        ctx.obj.restore_original(original_file_path=internal_config_path)
+        ctx.obj.restore_original(original_file_path=STB_INTERNAL_CONFIG_FILE)
         click.secho(
             "Configuration file has been restored to its original state.", fg="green"
         )
@@ -99,9 +98,30 @@ def reset(ctx):
 @click.pass_context
 def info(ctx):
     """Lookup what configuration path is currently being used."""
+    if Path(ctx.obj.path) == STB_INTERNAL_CONFIG_FILE:
+        print(
+            "You're using the internal configuration file that is in the package. "
+            "If you'd like to setup your own user configuration that you can "
+            "modify, run `stb config setup`."
+        )
+        exit(0)
+
     print(f"Current configuration file path: {ctx.obj.path}")
 
 
 @config.command(short_help="Setup the user's configuration folder at ~/.stb")
 def setup():
-    pass
+    if STB_USER_CONFIG_FILE.exists():
+        print(
+            f"You already have your configuration file setup at {STB_USER_CONFIG_FILE}"
+        )
+        exit(0)
+
+    if not STB_USER_CONFIG_FOLDER.exists():
+        STB_USER_CONFIG_FOLDER.mkdir()
+
+    copyfile(STB_INTERNAL_CONFIG_FILE, STB_USER_CONFIG_FILE)
+    click.secho(
+        f"Successfully setup your user configuration file at {STB_USER_CONFIG_FILE}",
+        fg="green",
+    )
