@@ -5,20 +5,20 @@
 ![Python](https://img.shields.io/badge/python-3.7%20%7C%203.8-blue)
 [![Black](https://img.shields.io/badge/style-black-black)](https://pypi.org/project/black/)
 ![Build Status](https://travis-ci.com/eugenetriguba/stb.svg?branch=master)
-[![codecov](https://codecov.io/gh/eugenetriguba/stb/branch/master/graph/badge.svg)](https://codecov.io/gh/eugenetriguba/stb) 
+[![codecov](https://codecov.io/gh/eugenetriguba/stb/branch/master/graph/badge.svg)](https://codecov.io/gh/eugenetriguba/stb)
 
 Stb allows you to issue commands to your set-top box (or whatever device you're wanting to control that takes in IR). It can then anaylze the behavior of the device and how it responds to those commands by
 inspecting the video output (using image recognition and OCR).
 
-This package is designed to be a small library that you can easily add to the test suite of your existing applications. It does not come with any sort of test runner. You can use it with python's unittest or a third party library like pytest. 
+This package is designed to be a small library that you can easily add to the test suite of your existing applications. It does not come with any sort of test runner. You can use it with python's unittest or a third party library like pytest.
 
-If you want an entire framework and something more full featured, where you can purchase a testing node, have support from a company that have been doing this for a while now, and don't want to do your own DIY setup, you should take a look at [stb-tester](https://github.com/stb-tester/stb-tester). 
+If you want an entire framework and something more full featured, where you can purchase a testing node, have support from a company that have been doing this for a while now, and don't want to do your own DIY setup, you should take a look at [stb-tester](https://github.com/stb-tester/stb-tester).
 
 ## Installation
 
 Stb requires [OpenCV](https://opencv.org/), [LIRC](http://www.lirc.org/), and [Gstreamer](https://gstreamer.freedesktop.org/) to be setup and installed already on the given system in order to work properly. LIRC works best with Linux, but there are ports to macOS and Windows. However, this package is setup to only work with Linux right now.
 
-If you use Ubuntu, there is a installation script for the prerequisites in `tools/prerequisites-install-ubuntu.sh`. Note that you will still have to setup the lirc 
+If you use Ubuntu, there is a installation script for the prerequisites in `tools/prerequisites-install-ubuntu.sh`. Note that you will still have to setup the lirc
 configuration and figure out your gstreamer pipelines.
 
 ## Linux Infrared Remote Control (LIRC)
@@ -65,6 +65,6 @@ so stb is able to pull video from the capture card and show it back to you using
 pipeline if necessary. To do this, first run `stb config setup` to setup the user configuration
 folder at `~/.stb`. Inside, you'll find a `config.ini` file which has keys to set for `source_pipeline`
 and `sink_pipeline`. Each capture card may need a different source and sink pipeline so it's hard
-to give a generic suggestion here. Use `gst-launch-1.0` to experiment until you find a pipeline 
+to give a generic suggestion here. Use `gst-launch-1.0` to experiment until you find a pipeline
 that works for you. If your capture card is compatible with video for linux (v4l2), something like `gst-launch-1.0 v4l2src ! autovideosink` would likely work to bring up your capture card stream. In
 this case, the `source_pipeline` would be `v4l2src` and the `sink_pipeline` would be `autovideosink`.

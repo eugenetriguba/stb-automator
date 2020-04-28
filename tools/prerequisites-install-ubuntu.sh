@@ -4,9 +4,9 @@
 #   - Builds and installs OpenCV from source.
 #
 # Note: It may take somewhere between 10 minutes to 2 hours to get everything
-# installed and built, depending on how powerful of a machine you're using. 
+# installed and built, depending on how powerful of a machine you're using.
 # 90% of that time comes from building and installing OpenCV.
-# To speed things up, add a -j# argument to `make`, where the # is your number 
+# To speed things up, add a -j# argument to `make`, where the # is your number
 # of CPU cores.
 
 # General Dependencies for opencv
@@ -47,9 +47,9 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D OPENCV_GENERATE_PKGCONFIG=ON \
     -D OPENCV_EXTRA_MODULES_PATH=~/opencv_build/opencv_contrib/modules \
     -D BUILD_EXAMPLES=ON \
-    -D WITH_LIBV4L=ON \    
+    -D WITH_LIBV4L=ON \
     -D WITH_FFMPEG=ON \
-    -D WITH_TBB=ON \   
+    -D WITH_TBB=ON \
     -D WITH_GTK=ON \
     -D WITH_V4L=ON \
     -D WITH_OPENGL=ON ..

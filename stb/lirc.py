@@ -29,8 +29,8 @@ class LircSocketError(Exception):
 
 class LircSocketTimeoutError(LircSocketError):
     """
-    For when a timeout error occurs with the socket. 
-    This can happen when recv does not find any data for 
+    For when a timeout error occurs with the socket.
+    This can happen when recv does not find any data for
     a given amount of time.
     """
 
@@ -39,7 +39,7 @@ class Lirc:
     """
     Communicate with the lircd daemon.
 
-    More information on the lircd daemon, socket interface, 
+    More information on the lircd daemon, socket interface,
     reply packet format, etc. can be found at https://www.lirc.org/html/lircd.html
     That information is not all documented here because it would introduce
     a lot of repetitiveness in the docstrings.
@@ -86,7 +86,7 @@ class Lirc:
         :param command: A command from the lircd socket command interface.
         See SOCKET COMMAND INTERFACE in https://www.lirc.org/html/lircd.html
         for more information.
-        
+
         :return: A LircResponse containing information on the command sent,
             whether it was successful, and any other data, if any was sent.
         """
@@ -150,9 +150,9 @@ class Lirc:
     def __parse_reply_packet(self, packet: str) -> LircResponse:
         """
         Parse the reply packet from lircd.
-        
+
         :param packet: The reply packet from lirc.
-      
+
         :return: An LircResponse containing the command sent,
             whether it was successful, and any other data, if any was sent.
         """
@@ -244,10 +244,10 @@ class Lirc:
     def list_remote_keys(self, remote: str) -> LircResponse:
         """
         List all the keys for a specific remote.
-        
+
         :param remote: The remote to list the keys of.
-        
-        :return: An LircResponse containing the keys in the 
+
+        :return: An LircResponse containing the keys in the
             data section.
         """
         return self.__send_command(f"LIST {remote}")
