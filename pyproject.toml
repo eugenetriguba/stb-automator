@@ -28,6 +28,7 @@ lint = "pre-commit run --all"
 test = "poetry run task test_unit"
 test_unit = "poetry run pytest -vvv --cov=stb/ --cov-report term-missing tests/"
 test_all = "export STB_RUN_LONG_TESTS=true && poetry run task test && unset STB_RUN_LONG_TESTS"
+commit = "cz commit"
 
 [tool.poetry.scripts]
 stb = 'stb.cli.runner:stb'
@@ -51,6 +52,9 @@ pytest-cov = "^2.8.1"
 bump2version = "^1.0.0"
 taskipy = "^1.2.1"
 black = "^19.10b0"
+sphinx = "^3.0.3"
+sphinx_rtd_theme = "^0.4.3"
+commitizen = "^1.22.1"
 
 [tool.black]
 line-length = 88
