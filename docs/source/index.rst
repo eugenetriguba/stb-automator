@@ -1,10 +1,8 @@
-.. stb-automator documentation master file, created by
-   sphinx-quickstart on Mon May 25 16:25:10 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Stb Automator Documentation
+===========================
 
-Welcome to stb-automator's documentation!
-=========================================
+Stb-automator is a package that allows automation of control
+and testing of set-top boxes.
 
 .. toctree::
    :maxdepth: 2
@@ -12,8 +10,6 @@ Welcome to stb-automator's documentation!
 
    lirc
    gstreamer
-
-
 
 Indices and tables
 ==================
