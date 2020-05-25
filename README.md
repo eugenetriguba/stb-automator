@@ -6,6 +6,7 @@
 [![Black](https://img.shields.io/badge/style-black-black)](https://pypi.org/project/black/)
 ![Build Status](https://travis-ci.com/eugenetriguba/stb.svg?branch=master)
 [![codecov](https://codecov.io/gh/eugenetriguba/stb/branch/master/graph/badge.svg)](https://codecov.io/gh/eugenetriguba/stb)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 Stb allows you to issue commands to your set-top box (or whatever device you're wanting to control that takes in IR). It can then anaylze the behavior of the device and how it responds to those commands by
 inspecting the video output (using image recognition and OCR).
