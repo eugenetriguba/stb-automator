@@ -1,11 +1,13 @@
-# LIRC
+LIRC
+====
 
 This file is to house information related to working with LIRC.
 It's purpose is to help you get up and running with it since I didn't
 find it the easiest to work with when I started, and I had wished there
 was more up to date information on it.
 
-## Platform Support
+Platform Support
+----------------
 
 While there are ports to macOS and Windows, I would still advise you use
 this with Linux if you can. In my experience, I found them much more difficult
@@ -18,7 +20,8 @@ On Windows, there is a winLIRC program: http://winlirc.sourceforge.net/
 
 On Linux, your system package manager will likely have it already.
 
-## Check If LIRC Is Recieving and Interpretting Your Remote Commands
+Check If LIRC Is Recieving and Interpretting Your Remote Commands
+-----------------------------------------------------------------
 
 One way to check if LIRC is recieving your commands is using the `irw`
 utilty from LIRC. IF you run `irw /var/run/lirc/lircd`, assumming that

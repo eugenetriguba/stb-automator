@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "stb"
+name = "stb-automator"
 version = "0.0.0"
 description = "A library for automated control & testing of set-top boxes"
 authors = ["Eugene Triguba <eugenetriguba@gmail.com>"]
@@ -22,6 +22,7 @@ classifiers = [
     "Topic :: Software Development :: Testing",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+packages = [{ include = "stb" }]
 
 [tool.taskipy.tasks]
 lint = "pre-commit run --all"
@@ -34,21 +35,21 @@ commit = "cz commit"
 stb = 'stb.cli.runner:stb'
 
 [tool.poetry.dependencies]
-python = "^3.6"
-click = "^7.1.1"
+python = "^3.6.1"
+click = "^7.1.2"
 opencv-python = "^4.2.0"
-config-file = "^0.9.0"
-PyGObject = "^3.36.0"
-numpy = "^1.18.2"
-pytesseract = "^0.3.3"
+config-file = "^0.10.0"
+PyGObject = "^3.36.1"
+numpy = "^1.18.4"
+pytesseract = "^0.3.4"
 
 [tool.poetry.dev-dependencies]
-pre-commit = "^2.3.0"
-flake8 = "^3.7.9"
+pre-commit = "^2.4.0"
+flake8 = "^3.8.2"
 isort = "^4.3.21"
 seed-isort-config = "^2.1.1"
-pytest = "^5.4.1"
-pytest-cov = "^2.8.1"
+pytest = "^5.4.2"
+pytest-cov = "^2.9.0"
 bump2version = "^1.0.0"
 taskipy = "^1.2.1"
 black = "^19.10b0"
