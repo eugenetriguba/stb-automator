@@ -23,6 +23,12 @@ Stb is a regular python library. It does not come with a test runner or enforce 
 ```python
 import stb
 
+from some_package import Menu
+
+def test_that_menu_key_brings_us_to_the_menu():
+    stb.press("KEY_MENU")
+    assert Menu().is_visible
+
 def test_that_settings_is_present_in_menu():
     stb.press("KEY_MENU")
     stb.wait_for_match("menu.png")
