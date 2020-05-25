@@ -1,3 +1,5 @@
+exclude: 'docs/source/index.rst'
+
 repos:
 
     - repo: git@github.com:humitos/mirrors-autoflake.git
