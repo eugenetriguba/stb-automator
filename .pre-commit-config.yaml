@@ -1,4 +1,4 @@
-exclude: 'docs/source/index.rst'
+exclude: 'docs/source/index.rst'  # rst-linter breaks on toctree
 
 repos:
 
