@@ -7,7 +7,7 @@
 [![Version](https://img.shields.io/pypi/v/stb-automator)](https://pypi.org/project/stb-automator/)
 [![Black](https://img.shields.io/badge/style-black-black)](https://pypi.org/project/black/)
 ![Build Status](https://travis-ci.com/eugenetriguba/stb-automator.svg?branch=master)
-[![codecov](https://codecov.io/gh/eugenetriguba/stb-automator/branch/master/graph/badge.svg)](https://codecov.io/gh/eugenetriguba/stb)
+[![codecov](https://codecov.io/gh/eugenetriguba/stb-automator/branch/master/graph/badge.svg)](https://codecov.io/gh/eugenetriguba/stb-automator)
 [![Documentation Status](https://readthedocs.org/projects/stb-automator/badge/?version=latest)](https://stb-automator.readthedocs.io/en/latest/?badge=latest)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
