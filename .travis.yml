@@ -2,7 +2,6 @@ language: python
 os: linux
 
 python:
-  - "3.6"
   - "3.7"
   - "3.8"
 
@@ -11,7 +10,7 @@ addons:
     update: true
 
 before_install:
-  - sudo apt -y install libgirepository1.0-dev libcairo2-dev pkg-config python3-dev
+  - sudo apt -y install libgirepository1.0-dev libcairo2-dev
 
 install:
   - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
