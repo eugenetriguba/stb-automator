@@ -2,7 +2,7 @@
 
 > Automated Control & Testing for Set-Top Boxes
 
-![Python](https://img.shields.io/badge/python-%203.6%20%7C%203.7%20%7C%203.8-blue)
+![Python](https://img.shields.io/badge/python-%203.7%20%7C%203.8-blue)
 ![Platform](https://img.shields.io/badge/platform-linux-blue)
 [![Version](https://img.shields.io/pypi/v/stb-automator)](https://pypi.org/project/stb-automator/)
 [![Black](https://img.shields.io/badge/style-black-black)](https://pypi.org/project/black/)
