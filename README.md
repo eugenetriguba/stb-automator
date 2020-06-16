@@ -18,7 +18,7 @@ Full documentation can be found at https://stb-automator.readthedocs.io
 
 ## Usage
 
-Stb is a regular python library. It does not come with a test runner or enforce a way for you to write your tests. This package is designed to be a small library that you can easily add to the test suite of your existing applications. It does not come with any sort of test runner. You can use it with python's unittest or a third party library like pytest.
+Stb is a regular python library. It does not come with a test runner or enforce a way for you to write your tests. You can use it with python's unittest or a third party library like pytest.
 
 ```python
 import stb
@@ -29,10 +29,10 @@ def test_that_menu_key_brings_us_to_the_menu():
     stb.press("KEY_MENU")
     assert Menu().is_visible
 
-def test_that_settings_is_present_in_menu():
+def test_that_settings_icon_is_in_active_state_in_menu():
     stb.press("KEY_MENU")
     stb.wait_for_match("menu.png")
-    stb.press_until_match("KEY_RIGHT", "settings-icon.png")
+    stb.press_until_match("KEY_RIGHT", "settings-icon-active.png")
 ```
 
 We can then run our tests using, in this example, pytest.
