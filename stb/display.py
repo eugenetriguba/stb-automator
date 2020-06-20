@@ -11,13 +11,8 @@ Gst.init(None)
 
 class Display:
     def __init__(self, source_pipeline: str = None, sink_pipeline: str = None):
-        config = ConfigFile(get_config_file_path())
-        self.source_pipeline = (
-            source_pipeline if source_pipeline else config.get("video.source_pipeline")
-        )
-        self.sink_pipeline = (
-            sink_pipeline if sink_pipeline else config.get("video.sink_pipeline")
-        )
+        self.source_pipeline = source_pipeline
+        self.sink_pipeline = sink_pipeline
 
     def get_frame(self, timeout_secs: float = 10.0) -> Frame:
         pass
