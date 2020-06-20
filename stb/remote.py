@@ -36,7 +36,7 @@ class Remote:
 
         :param lirc_socket_path: The full path to your lircd socket.
         """
-        self.name = name
+        self.__name = name
         self.__lirc = Lirc(socket_path=lirc_socket_path)
 
     def press(
@@ -67,7 +67,7 @@ class Remote:
 
     def __timed_send_once(self, key: str) -> KeyPress:
         start_time = time.time()
-        response = self.__lirc.send_once(key, self.name)
+        response = self.__lirc.send_once(key, self.__name)
         end_time = time.time()
         return KeyPress(key, response.success, start_time, end_time)
 
