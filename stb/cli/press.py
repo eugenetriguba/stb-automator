@@ -1,8 +1,9 @@
 import click
 from config_file import ConfigFile
+from lirc.exceptions import LircdCommandFailureError
 
 from stb.remote import Remote
-from stb.utils import get_config_file_path
+from stb.utils import get_config_file
 
 
 @click.command(short_help="Send IR signals")
@@ -11,14 +12,13 @@ from stb.utils import get_config_file_path
 def press(key, remote):
     """
     Simulate a button press by sending an IR signal
-
     """
     if not remote:
-        config = ConfigFile(get_config_file_path())
-        remote = config.get("lirc.remote")
+        remote = get_config_file().get("lirc.remote")
 
-    result = Remote(remote).press(key)
-    if result.success:
+    try:
+        Remote(remote).press(key)
         click.secho(f"Emitted {key} successfully", fg="green")
-    else:
-        click.secho(f"Error while trying to transmit {key}", fg="red")
+    except LircdCommandFailureError as error:
+        click.secho(f"Error while trying to transmit {key}: ", fg="red")
+        print(error)

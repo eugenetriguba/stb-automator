@@ -3,7 +3,7 @@ from config_file import ConfigFile
 from gi.repository import Gst
 
 from stb.frame import Frame
-from stb.utils import get_config_file_path
+from stb.utils import get_config_file
 
 gi.require_version("Gst", "1.0")
 Gst.init(None)
@@ -11,7 +11,7 @@ Gst.init(None)
 
 class Display:
     def __init__(self, source_pipeline: str = None, sink_pipeline: str = None):
-        config = ConfigFile(get_config_file_path())
+        config = get_config_file()
         self.source_pipeline = (
             source_pipeline if source_pipeline else config.get("video.source_pipeline")
         )

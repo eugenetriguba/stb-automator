@@ -1,4 +1,4 @@
-# Stb Automator
+# STB Automator
 
 > Automated Control & Testing for Set-Top Boxes
 
@@ -18,7 +18,7 @@ Full documentation can be found at https://stb-automator.readthedocs.io
 
 ## Usage
 
-Stb is a regular python library. It does not come with a test runner or enforce a way for you to write your tests. You can use it with python's unittest or a third party library like pytest.
+STB-automator is a regular python library. It does not come with a test runner or enforce a way for you to write your tests. You can use it with python's unittest or a third party library like pytest.
 
 ```python
 import stb

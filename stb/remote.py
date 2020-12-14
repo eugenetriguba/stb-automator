@@ -1,75 +1,62 @@
 import time
+from typing import Union, List
 
-from stb.lirc import Lirc
+from lirc import Client, LircdConnection
 
-
-class KeyPress:
-    def __init__(self, key: str, success: bool, start_time: float, end_time: float):
-        self.key = key
-        self.success = success
-        self.start_time = start_time
-        self.end_time = end_time
-
-    def __repr__(self):
-        return (
-            f"KeyPress(key={self.key}, "
-            f"success={self.success}, "
-            f"start_time={self.start_time}, "
-            f"end_time={self.end_time})"
-        )
+from .key_press import KeyPress
 
 
 class Remote:
-    """
-    Send IR signals via LIRC.
+    """Send IR signals via LIRC."""
 
-    This class provides the high-level api for sending IR wheras
-    the Lirc class is the lower level api to interacting with LIRC.
-    """
-
-    def __init__(self, name: str, lirc_socket_path: str = Lirc.DEFAULT_SOCKET_PATH):
+    def __init__(self, name: str, connection: LircdConnection = None):
         """
         Initialize this Remote by connecting to the lircd socket.
 
-        :param name: Name of the remote to use.
-                     Corresponds to the name of your LIRC remote.
+        Args:
+            name: Name of the remote to use.
+                  Corresponds to the name of your LIRC remote.
 
-        :param lirc_socket_path: The full path to your lircd socket.
+            connection: An LircdConnection specifying how to connect to LIRC
+            on your system. By default, this will choose sensible defaults
+            depending on the operating system it is run on. See
+            https://pypi.org/project/lirc/ for more.
         """
-        self.name = name
-        self.__lirc = Lirc(socket_path=lirc_socket_path)
+        self.__name = name
+        self.__lirc = Client(connection=connection if connection else LircdConnection())
 
     def press(
         self, key: str, repeat_count: int = 1, interpress_delay_secs: float = 0.3
-    ):
+    ) -> Union[KeyPress, List[KeyPress]]:
         """
         Emit an IR signal for a given key.
 
-        :param key: The name of the key.
-        :param repeat_count: The number of times to press this key.
-        :param interpress_delay_secs: The wait time between key presses
-                                      if repeat_count > 1.
+        Args:
+            key: The name of the key.
+            repeat_count: The number of times to press this key.
+            interpress_delay_secs: The wait time between key presses if repeat_count > 1.
 
-        :return: a KeyPress or a list of KeyPress if repeat_count > 1.
-        :rtype: KeyPress or list
+        Returns:
+            a KeyPress or a list of KeyPress if repeat_count > 1.
         """
         if repeat_count > 1:
             key_presses = []
 
             while repeat_count > 0:
-                key_presses.append(self.__timed_send_once(key))
+                key_presses.append(self.__timed_send(key))
                 time.sleep(interpress_delay_secs)
                 repeat_count -= 1
 
             return key_presses
 
-        return self.__timed_send_once(key)
+        return self.__timed_send(key)
 
-    def __timed_send_once(self, key: str) -> KeyPress:
+    def __timed_send(self, key: str) -> KeyPress:
         start_time = time.time()
-        response = self.__lirc.send_once(key, self.name)
+        self.__lirc.send(self.__name, key)
         end_time = time.time()
-        return KeyPress(key, response.success, start_time, end_time)
+
+        return KeyPress(key, start_time, end_time)
 
     def press_and_wait(self, key: str):
         """
